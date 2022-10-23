@@ -1,0 +1,82 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+    box-sizing: border-box;
+}
+:root{
+    --border: 1px solid rgba(0,0,0,1);
+    --con-height: 46rem;
+    --border-radius: 0.5rem;
+    --button-radius: 0.7rem;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
+}
+#contentCon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 1rem;
+    width:70rem;
+    height:50rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+
+}
+#hubCon{
+    width: 20rem;
+    height: var(--con-height);
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+#hub{
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    flex-direction: column;
+    height: var(--con-height);
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+.categoriesCon{
+    width: 19rem;
+    height: 45rem;
+    border: var(--border);
+    border-radius: var(--button-radius);
+}
+#categoryButton{
+    width: 19rem;
+    height: 3rem;
+    border: var(--border);
+    border-radius: var(--button-radius);
+}
+#categoryButton:hover{
+    cursor: pointer;
+}
+#listCon{
+    width: var(--con-height);
+    height: var(--con-height);
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
