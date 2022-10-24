@@ -1,5 +1,5 @@
 import "./style.css";
-import {} from "./hub.js";
+import {newCategoryForm} from "./hub.js";
 
 const createInterface = () => {
     const contentCon = document.createElement("div");
@@ -39,9 +39,17 @@ const createCategoryButton = (hub) =>{
     categoryButton.setAttribute("type","button");
     categoryButton.textContent = "Add New List";
 
+    openCategoryForm(categoryButton);
     
     categoryButtonCon.append(categoryButton);
     hub.append(categoryButtonCon);
+}
+
+const openCategoryForm = (button) =>{
+    return button.addEventListener("click", () =>{
+        newCategoryForm(document.body);
+        document.querySelector("#contentCon").setAttribute("class", "blur");
+    })
 }
 
 const createList = (contentCon) =>{

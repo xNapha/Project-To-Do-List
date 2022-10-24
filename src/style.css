@@ -27,6 +27,7 @@ time, mark, audio, video {
 }
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -73,6 +74,30 @@ body{
 }
 #categoryButton:hover{
     cursor: pointer;
+}
+#hubFormCon{
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+#hubForm{
+    background-color: rgba(255,255,255,1);
+    width: 20rem;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.blur{
+    filter:blur(.2rem);
+}
+textarea{
+    resize: none;
 }
 #listCon{
     width: var(--con-height);
