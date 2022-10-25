@@ -82,9 +82,16 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#hubFormExit{
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index:1;
     background-color: rgba(0,0,0,0.5);
 }
 #hubForm{
+    position:fixed;
     background-color: rgba(255,255,255,1);
     width: 20rem;
     height: 20rem;
@@ -92,6 +99,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index:2;
 }
 .blur{
     filter:blur(.2rem);
