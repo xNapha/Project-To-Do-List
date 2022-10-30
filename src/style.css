@@ -20,10 +20,11 @@ time, mark, audio, video {
     box-sizing: border-box;
 }
 :root{
-    --border: 1px solid rgba(0,0,0,1);
+    --border: 1px solid rgba(0, 0, 0, 1);
     --con-height: 46rem;
     --border-radius: 0.5rem;
     --button-radius: 0.7rem;
+    --categories-width: 19rem;
 }
 body{
     display: flex;
@@ -60,20 +61,42 @@ body{
     padding: 0.5rem;
     gap: 0.5rem;
 }
-.categoriesCon{
-    width: 19rem;
+#categoriesCon{
+    width: var(--categories-width);
     height: 45rem;
+}
+#categories{
+    width: var(--categories-width);
+    height: 41.5rem;
     border: var(--border);
     border-radius: var(--button-radius);
+    flex-direction: column;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.1);
 }
 #categoryButton{
-    width: 19rem;
+    width: var(--categories-width);
     height: 3rem;
     border: var(--border);
     border-radius: var(--button-radius);
 }
 #categoryButton:hover{
     cursor: pointer;
+}
+.newTaskCon{
+    width: 17rem;
+}
+.newTask{
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(255,255,255,1);
+    border-radius: var(--button-radius);
+    cursor: pointer;
+}
+.newTask>h1{
+    width: 16rem;
 }
 #hubFormCon{
     position:fixed;
@@ -107,9 +130,110 @@ body{
 textarea{
     resize: none;
 }
-#listCon{
+#priorityInput{
+    -webkit-appearance: none;
+    appearance: none;
+    background: linear-gradient(90deg, #00ff04,#ff7200,#ff0000);
+    border-radius: 2rem;
+    height: .4rem;
+}
+#priorityInput::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    background: #FFF;
+    cursor: pointer;
+}
+#priorityInput::-moz-range-thumb{
+    background: #FFF;
+    cursor: pointer;
+}
+.priority{
+    height: 3rem;
+    width: 1rem;
+    border-top-right-radius: var(--button-radius);
+    border-bottom-right-radius: var(--button-radius);
+}
+.priority1{
+    background-color: #00ff04;
+}
+.priority2{
+    background-color: #ff7200;
+}
+.priority3{
+    background-color: #ff0000;
+}
+#list{
+    display:flex;
+    flex-direction: column;
     width: var(--con-height);
     height: var(--con-height);
     border: var(--border);
     border-radius: var(--border-radius);
+}
+#infoCon{
+    width: var(--con-height);
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+}
+#headerCon{
+    display: inherit;
+    flex-direction: row;
+    height: 5rem;
+}
+#title{
+    width: 37rem;
+    height: 3rem;
+    padding: .2rem 0 .2rem .2rem;
+    font-size: 2rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+#description{
+    font-size: 0.9rem;
+    padding: .3rem 0 .3rem .2rem;
+    height: 2rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+#settingsCon{
+    display: flex;
+    flex-direction: column;
+    width: 9rem;
+}
+#dueDateCon{
+    width: inherit;
+    height: 3rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+#buttonsCon{
+    display: flex;
+    flex-direction: row;
+    height: 2rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    justify-content: right;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0 0.3rem 0 0 ;
+}
+#buttonsCon > button{
+    width: 1.5rem;
+    height: 1.5rem
+}
+#tasksCon{
+    width: var(--con-height);
+    height: 41rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+.toDos{
+    height: 2rem;
+    border: var(--border);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+.darken{
+    background-color: rgba(0,0,0,0.5);
 }

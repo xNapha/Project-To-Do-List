@@ -1,10 +1,15 @@
-import { } from "./index.js";
+import {showList} from "./list.js";
+
+let hubInfoStorage = [];
+let counter = 0;
 
 const newCategoryForm = (x) =>{
     const hubFormCon = document.createElement("div");
     hubFormCon.setAttribute("id", "hubFormCon");
+
     const hubFormExit = document.createElement("div");
     hubFormExit.setAttribute("id","hubFormExit");
+
     const hubForm = document.createElement("form");
     hubForm.setAttribute("id", "hubForm");
 
@@ -18,34 +23,34 @@ const newCategoryForm = (x) =>{
     titleInput.setAttribute("name", "title");
     titleInputCon.append(titleInput);
 
-    const descriptionCon = document.createElement("div");
-    descriptionCon.setAttribute("id", "descriptionCon");
-    const description = document.createElement("textarea");
-    description.setAttribute("id", "description");
-    description.setAttribute("placeholder", "Brief description...");
-    descriptionCon.append(description);
+    const descriptionInputCon = document.createElement("div");
+    descriptionInputCon.setAttribute("id", "descriptionInputCon");
+    const descriptionInput = document.createElement("textarea");
+    descriptionInput.setAttribute("id", "descriptionInput");
+    descriptionInput.setAttribute("placeholder", "Brief description...");
+    descriptionInputCon.append(descriptionInput);
 
-    const dueDateCon = document.createElement("div");
-    dueDateCon.setAttribute("id","dueDateCon");
+    const dueDateInputCon = document.createElement("div");
+    dueDateInputCon.setAttribute("id","dueDateInputCon");
     const dueDateLabel = document.createElement("label");
     dueDateLabel.setAttribute("id","dueDateLabel");
     dueDateLabel.setAttribute("for","dueDate");
     dueDateLabel.textContent = "Due: ";
-    const dueDate = document.createElement("input");
-    dueDate.setAttribute("id","dueDate");
-    dueDate.setAttribute("type","date");
-    dueDate.setAttribute("name","dueDate");
-    dueDateCon.append(dueDateLabel,dueDate);
+    const dueDateInput = document.createElement("input");
+    dueDateInput.setAttribute("id","dueDateInput");
+    dueDateInput.setAttribute("type","date");
+    dueDateInput.setAttribute("name","dueDate");
+    dueDateInputCon.append(dueDateLabel,dueDateInput);
 
-    const priorityCon = document.createElement("div");
-    priorityCon.setAttribute("id","priorityCon");
-    const priority = document.createElement("input");
-    priority.setAttribute("id","priority");
-    priority.setAttribute("type","range");
-    priority.setAttribute("min","1");
-    priority.setAttribute("value","3");
-    priority.setAttribute("max","5");
-    priorityCon.append(priority);
+    const priorityInputCon = document.createElement("div");
+    priorityInputCon.setAttribute("id","priorityInputCon");
+    const priorityInput = document.createElement("input");
+    priorityInput.setAttribute("id","priorityInput");
+    priorityInput.setAttribute("type","range");
+    priorityInput.setAttribute("min","1");
+    priorityInput.setAttribute("value","2");
+    priorityInput.setAttribute("max","3");
+    priorityInputCon.append(priorityInput);
 
     const addButtonCon = document.createElement("div");
     const addButton = document.createElement("button");
@@ -56,33 +61,86 @@ const newCategoryForm = (x) =>{
 
     closeFormEvent(addButton).saveData();
 
-    hubForm.append(titleInputCon, descriptionCon, dueDateCon,priorityCon, addButtonCon);
+    hubForm.append(titleInputCon, descriptionInputCon, dueDateInputCon,priorityInputCon, addButtonCon);
     hubFormCon.append(hubFormExit,hubForm);
     x.append(hubFormCon);
-}
+};
 
 const closeFormEvent = (area) => {
-    const closeForm = () => 
+    const closeForm = () => {
         area.addEventListener("click",()=>{
             document.querySelector("#hubFormCon").remove()
             document.querySelector("#contentCon").removeAttribute("class", "blur");
         });
-    
-    const saveData = () =>{
+    };
+
+    const saveData = () => {
         area.addEventListener("click",() =>{
-            console.log("data saved");
+            counter++;
+            hubInfoStorage[counter] =  storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value);
+            createNewTask(hubInfoStorage[counter]);
+            console.log(hubInfoStorage);
         });
         closeForm(area);
     };
 
-    
-    return { closeForm, saveData}
-}
+    const showData = () =>{
+        for(let i = 0; i<hubInfoStorage.length; i++){
+            createNewTask(hubInfoStorage[i]);
+        }
+    }
 
-const saveData = (area) =>{
-    closeFormEvent(area);
+    return {closeForm, saveData, showData};
 };
 
+const createNewTask = (storage) => {
+    const categories = document.querySelector("#categories");
+
+    const newTaskCon  = document.createElement("div");
+    newTaskCon.setAttribute("id", counter);
+    newTaskCon.setAttribute("class", "newTaskCon");
+
+    newTaskCon.addEventListener("click",() =>{
+        showList(hubInfoStorage[newTaskCon.id]);
+    });
+
+    const newTask = document.createElement("div");
+    newTask.setAttribute("class", "newTask");
+
+    const taskLabel = document.createElement("h1");
+    taskLabel.textContent = storage.title;
 
 
-export {newCategoryForm};
+    const taskPriority = document.createElement("div");
+    taskPriority.classList.add("priority","priority"+storage.priority);
+
+
+    newTask.append(taskLabel, taskPriority);
+    newTaskCon.append(newTask);
+    categories.append(newTaskCon);
+};
+
+const storeInfo = (a, b, c, d, e) => {
+    const title = a;
+    const description = b;
+    const dueDate = c;
+    const priority = d;
+    const list = e;
+
+    return{title, description, dueDate, priority, list};
+};
+
+const listInfo = (a,b) =>{
+    const task = a;
+    const check = b;
+
+    return{task, check}
+};
+
+const taskOne = listInfo("1", false);
+const taskTwo = listInfo("2", true);
+const taskThree = listInfo("3", false);
+const test = storeInfo("test","hello1","2022-10-29","2",[taskOne,taskTwo, taskThree]);
+hubInfoStorage[0] = test;
+
+export {newCategoryForm,closeFormEvent,hubInfoStorage};

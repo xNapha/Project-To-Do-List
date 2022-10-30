@@ -1,5 +1,5 @@
 import "./style.css";
-import {newCategoryForm} from "./hub.js";
+import {newCategoryForm, closeFormEvent} from "./hub.js";
 
 const createInterface = () => {
     const contentCon = document.createElement("div");
@@ -19,15 +19,19 @@ const createHub = (contentCon) =>{
 
     createCategories(hub);
     createCategoryButton(hub);
-    
+
     hubCon.append(hub);
     contentCon.append(hubCon);
 }
 
 const createCategories = (hub)=>{
     const categoriesCon = document.createElement("div");
-    categoriesCon.setAttribute("class","categoriesCon");
+    categoriesCon.setAttribute("id","categoriesCon");
 
+    const categories = document.createElement("div");
+    categories.setAttribute("id", "categories");
+
+    categoriesCon.append(categories);
     hub.append(categoriesCon);
 }
 
@@ -40,7 +44,7 @@ const createCategoryButton = (hub) =>{
     categoryButton.textContent = "Add New List";
 
     openCategoryForm(categoryButton);
-    
+
     categoryButtonCon.append(categoryButton);
     hub.append(categoryButtonCon);
 }
@@ -49,8 +53,8 @@ const openCategoryForm = (button) =>{
     return button.addEventListener("click", () =>{
         newCategoryForm(document.body);
         document.querySelector("#contentCon").setAttribute("class", "blur");
-    })
-}
+    });
+};
 
 const createList = (contentCon) =>{
     const listCon = document.createElement("div");
@@ -60,6 +64,7 @@ const createList = (contentCon) =>{
 
     listCon.append(list);
     contentCon.append(listCon);
-}
+};
 
 createInterface();
+closeFormEvent().showData();
