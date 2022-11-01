@@ -79,7 +79,6 @@ const closeFormEvent = (area) => {
             counter++;
             hubInfoStorage[counter] =  storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value);
             createNewTask(hubInfoStorage[counter]);
-            console.log(hubInfoStorage);
         });
         closeForm(area);
     };
@@ -143,4 +142,4 @@ const taskThree = listInfo("3", false);
 const test = storeInfo("test","hello1","2022-10-29","2",[taskOne,taskTwo, taskThree]);
 hubInfoStorage[0] = test;
 
-export {newCategoryForm,closeFormEvent,hubInfoStorage};
+export {newCategoryForm,closeFormEvent,hubInfoStorage, listInfo};

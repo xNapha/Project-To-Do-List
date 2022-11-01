@@ -72,6 +72,7 @@ body{
     border-radius: var(--button-radius);
     flex-direction: column;
     overflow: auto;
+    overflow-x: hidden;
     background-color: rgba(0,0,0,0.1);
 }
 #categoryButton{
@@ -84,7 +85,7 @@ body{
     cursor: pointer;
 }
 .newTaskCon{
-    width: 17rem;
+    width: 19rem;
 }
 .newTask{
     height: 3rem;
@@ -96,7 +97,7 @@ body{
     cursor: pointer;
 }
 .newTask>h1{
-    width: 16rem;
+    width: 18rem;
 }
 #hubFormCon{
     position:fixed;
@@ -228,8 +229,15 @@ textarea{
     border: var(--border);
     border-radius: var(--border-radius);
 }
+#toDoCon{
+    height: 41rem;
+    
+    overflow:auto;
+    overflow-x: hidden;
+}
 .toDos{
     height: 2rem;
+    width: var(--con-height);
     border: var(--border);
     border-radius: var(--border-radius);
     cursor: pointer;

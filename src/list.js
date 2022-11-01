@@ -1,11 +1,10 @@
-import { hubInfoStorage } from "./hub";
+import { hubInfoStorage, listInfo} from "./hub";
 
 const showList = (x) =>{
     if (x == undefined){
         removeList();
         createList(x);
     } else{
-        //showList
         removeList();
         createList(x);
     }
@@ -54,7 +53,7 @@ const createList = (x) =>{
     const addTaskButton = document.createElement("button");
     addTaskButton.setAttribute("id","addTaskButton");
     addTaskButton.textContent = "R";
-;
+    
     buttonsCon.append(editCon, addTaskButton);
     settingsCon.append(dueDateCon, buttonsCon);
     headerCon.append(textCon, settingsCon);
@@ -80,6 +79,8 @@ const importToDoFromList = (x) =>{
     for (let i = 0; i<x.list.length; i++){
         createToDo(x.list[i]);
     };
+    addToDo(x);
+    
 };
 
 const createToDo = (y) =>{
@@ -92,6 +93,28 @@ const createToDo = (y) =>{
        checkedOff(toDo,y);
     });
     toDoCon.append(toDo);
+};
+
+const addToDo = (x) =>{
+    const toDoCon = document.querySelector("#toDoCon");
+    const addToDoButton = document.createElement("button");
+    addToDoButton.setAttribute("id", "addToDo");
+    addToDoButton.classList.add("toDos");
+    addToDoButton.textContent = "Add";
+
+    addToDoButton.addEventListener("click",()=>{
+        addToDoEvent(x.list);
+        removeToDoList();
+        importToDoFromList(x);
+    });
+    toDoCon.append(addToDoButton);
+}
+
+const addToDoEvent = (y) =>{
+    var tempCounter = y.length;
+    y[tempCounter] = listInfo("test", false);
+    console.log(tempCounter)
+    console.log(y)
 };
 
 const checkedOff = (toDo, y) =>{
@@ -110,6 +133,14 @@ const darken = (toDo,y) =>{
         toDo.classList.add("darken");
     }
 };
+
+const removeToDoList = () =>{
+    document.querySelector("#toDoCon").remove();
+    const list = document.querySelector("#list");
+    const toDoCon = document.createElement("div");
+    toDoCon.setAttribute("id","toDoCon");
+    list.append(toDoCon);
+}
 
 
 export {showList}
