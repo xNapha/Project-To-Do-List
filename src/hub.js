@@ -69,7 +69,7 @@ const newCategoryForm = (x) =>{
 const closeFormEvent = (area) => {
     const closeForm = () => {
         area.addEventListener("click",()=>{
-            document.querySelector("#hubFormCon").remove()
+            document.querySelector("#hubFormCon").remove();
             document.querySelector("#contentCon").removeAttribute("class", "blur");
         });
     };
@@ -77,69 +77,72 @@ const closeFormEvent = (area) => {
     const saveData = () => {
         area.addEventListener("click",() =>{
             counter++;
-            hubInfoStorage[counter] =  storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value);
+            hubInfoStorage[counter] =  storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value, [], false, counter);
             createNewTask(hubInfoStorage[counter]);
         });
-        closeForm(area);
+        closeForm();
     };
 
     const showData = () =>{
         for(let i = 0; i<hubInfoStorage.length; i++){
-            createNewTask(hubInfoStorage[i]);
-        }
-    }
+            if (hubInfoStorage[i].remove == false){
+                createNewTask(hubInfoStorage[i]);
+            };
+        };
+    };
 
     return {closeForm, saveData, showData};
 };
 
 const createNewTask = (storage) => {
+    const perm = counter;
     const categories = document.querySelector("#categories");
 
     const newTaskCon  = document.createElement("div");
-    newTaskCon.setAttribute("id", counter);
-    newTaskCon.setAttribute("class", "newTaskCon");
+    newTaskCon.setAttribute("id", "task"+perm);
+    newTaskCon.setAttribute("class", "newTask");
 
     newTaskCon.addEventListener("click",() =>{
-        showList(hubInfoStorage[newTaskCon.id]);
+        showList(hubInfoStorage[perm]);
     });
-
-    const newTask = document.createElement("div");
-    newTask.setAttribute("class", "newTask");
-
+    
     const taskLabel = document.createElement("h1");
+    taskLabel.setAttribute("id","taskTitle"+ counter);
     taskLabel.textContent = storage.title;
 
-
     const taskPriority = document.createElement("div");
+    taskPriority.setAttribute("id", "taskPriority"+perm);
     taskPriority.classList.add("priority","priority"+storage.priority);
 
-
-    newTask.append(taskLabel, taskPriority);
-    newTaskCon.append(newTask);
+    newTaskCon.append(taskLabel, taskPriority);
     categories.append(newTaskCon);
 };
 
-const storeInfo = (a, b, c, d, e) => {
+const storeInfo = (a, b, c, d, e, f, g) => {
     const title = a;
     const description = b;
     const dueDate = c;
     const priority = d;
     const list = e;
+    const remove = f;
+    const taskCount = g;
 
-    return{title, description, dueDate, priority, list};
+    return{title, description, dueDate, priority, list , remove, taskCount};
 };
 
-const listInfo = (a,b) =>{
+const listInfo = (a,b,c,d) =>{
     const task = a;
     const check = b;
+    const remove = c;
+    const count = d;
 
-    return{task, check}
+    return{task, check, remove, count};
 };
 
-const taskOne = listInfo("1", false);
-const taskTwo = listInfo("2", true);
-const taskThree = listInfo("3", false);
-const test = storeInfo("test","hello1","2022-10-29","2",[taskOne,taskTwo, taskThree]);
+const taskOne = listInfo("1", false, false, 0);
+const taskTwo = listInfo("2", true, false, 1);
+const taskThree = listInfo("3", false, false, 2);
+const test = storeInfo("test","hello1","2022-10-29","2",[taskOne,taskTwo, taskThree], false ,0);
 hubInfoStorage[0] = test;
 
-export {newCategoryForm,closeFormEvent,hubInfoStorage, listInfo};
+export {newCategoryForm,closeFormEvent, listInfo};

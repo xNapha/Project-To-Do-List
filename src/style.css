@@ -84,10 +84,8 @@ body{
 #categoryButton:hover{
     cursor: pointer;
 }
-.newTaskCon{
-    width: 19rem;
-}
 .newTask{
+    width: 19rem;
     height: 3rem;
     display: flex;
     flex-direction: row;
@@ -231,9 +229,12 @@ textarea{
 }
 #toDoCon{
     height: 41rem;
-    
     overflow:auto;
     overflow-x: hidden;
+}
+#toDoCon > div{
+    display: flex;
+    flex-direction: row;
 }
 .toDos{
     height: 2rem;
@@ -241,6 +242,9 @@ textarea{
     border: var(--border);
     border-radius: var(--border-radius);
     cursor: pointer;
+}
+.toDos > p{
+    width: var(--con-height);
 }
 .darken{
     background-color: rgba(0,0,0,0.5);
