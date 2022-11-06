@@ -1,4 +1,4 @@
-import { hubInfoStorage, listInfo, closeFormEvent} from "./hub.js";
+import { listInfo, closeFormEvent} from "./hub.js";
 
 const showList = (x) =>{    
     const removeList = () =>{
@@ -54,7 +54,9 @@ const showList = (x) =>{
         deleteButton.textContent = "-";
     
         deleteButton.addEventListener("click",()=>{
+
             x.remove = true;
+            localStorage[x.taskCount] = JSON.stringify(x);
             document.querySelector("#task"+x.taskCount).remove();
             document.querySelector("#infoCon").remove()
             document.querySelector("#toDoCon").remove()
@@ -153,6 +155,7 @@ const showList = (x) =>{
             document.querySelector("#description").textContent = x.description;
             document.querySelector("#dueDateCon").textContent = x.dueDate;
             document.querySelector("#taskPriority"+x.taskCount).classList.add("priority"+d);
+            localStorage[x.taskCount] = JSON.stringify(x);
         };
     };
 
@@ -209,6 +212,7 @@ const importToDosFromList = (x) =>{
             x.list[tempCounter] = listInfo(descriptionInput.value, false, false, tempCounter);
             removeToDoList();
             importToDosFromList(x);
+            localStorage[x.taskCount] = JSON.stringify(x);
         });
         
     
@@ -232,9 +236,11 @@ const importToDosFromList = (x) =>{
         const checkedOff = (toDo, listInfo) => {
             if(listInfo.check == true){
                 listInfo.check = false;
+                localStorage[x.taskCount] = JSON.stringify(x);
                 toDo.classList.remove("darken");
             } else{
                 listInfo.check = true;
+                localStorage[x.taskCount] = JSON.stringify(x);
                 toDo.classList.add("darken");
             };
             isEverythingDone(x)
@@ -277,8 +283,9 @@ const importToDosFromList = (x) =>{
             closeFormEvent(addButton).closeForm();
 
             const edit = (a) =>{
-                listInfo.task = a;
+                x.list[listInfo.count].task = a;
                 document.querySelector("#listText"+listInfo.count).textContent = a;
+                localStorage[x.taskCount] = JSON.stringify(x);
             }
 
             addButton.addEventListener("click",()=>{
@@ -293,8 +300,11 @@ const importToDosFromList = (x) =>{
         }
 
         const removeList = (listInfo) =>{
-            listInfo.remove = true;
+            x.list[listInfo.count].remove = true;
+            x.list[listInfo.count].check = true;
             document.querySelector("#list"+listInfo.count).remove();
+            localStorage[x.taskCount] = JSON.stringify(x);
+            isEverythingDone(x);
         }
     
         const toDoCon = document.querySelector("#toDoCon");
@@ -327,19 +337,7 @@ const importToDosFromList = (x) =>{
         toDoCon.append(toDo);
     };
 
-    const isEverythingDone = (x) =>{
-        var temp = 0;
-        for(let i = 0; i < x.list.length; i++){
-            if(x.list[i].check){
-                temp++
-            }
-            if(temp == x.list.length){
-                document.querySelector("#task"+ x.taskCount).classList.add("darken");
-            } else if(temp != x.list.length){
-                document.querySelector("#task"+ x.taskCount).classList.remove("darken");
-            }
-        }
-    };
+    
 
     for (let i = 0; i<x.list.length; i++){
         createToDo(x.list[i]);
@@ -349,4 +347,18 @@ const importToDosFromList = (x) =>{
 
 };
 
-export {showList}
+const isEverythingDone = (x) =>{
+    var temp = 0;
+    for(let i = 0; i < x.list.length; i++){
+        if(x.list[i].check){
+            temp++
+        }
+        if(temp == x.list.length){
+            document.querySelector("#task"+ x.taskCount).classList.add("darken");
+        } else if(temp != x.list.length){
+            document.querySelector("#task"+ x.taskCount).classList.remove("darken");
+        }
+    }
+};
+
+export {showList, isEverythingDone}

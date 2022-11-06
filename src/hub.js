@@ -1,7 +1,6 @@
-import {showList} from "./list.js";
+import {showList, isEverythingDone} from "./list.js";
 
-let hubInfoStorage = [];
-let counter = 0;
+let counter = localStorage.length-1;
 
 const newCategoryForm = (x) =>{
     const hubFormCon = document.createElement("div");
@@ -77,16 +76,17 @@ const closeFormEvent = (area) => {
     const saveData = () => {
         area.addEventListener("click",() =>{
             counter++;
-            hubInfoStorage[counter] =  storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value, [], false, counter);
-            createNewTask(hubInfoStorage[counter]);
+            localStorage[counter] = JSON.stringify(storeInfo(document.querySelector("#titleInput").value, document.querySelector("#descriptionInput").value, document.querySelector("#dueDateInput").value, document.querySelector("#priorityInput").value, [], false, counter));
+            createNewTask(JSON.parse(localStorage[counter]));
         });
         closeForm();
     };
 
     const showData = () =>{
-        for(let i = 0; i<hubInfoStorage.length; i++){
-            if (hubInfoStorage[i].remove == false){
-                createNewTask(hubInfoStorage[i]);
+        for(let i = 0; i<localStorage.length; i++){
+            if (JSON.parse(localStorage[i]).remove == false){
+                createNewTask(JSON.parse(localStorage[i]));
+                isEverythingDone(JSON.parse(localStorage[i]));
             };
         };
     };
@@ -95,23 +95,22 @@ const closeFormEvent = (area) => {
 };
 
 const createNewTask = (storage) => {
-    const perm = counter;
     const categories = document.querySelector("#categories");
 
     const newTaskCon  = document.createElement("div");
-    newTaskCon.setAttribute("id", "task"+perm);
+    newTaskCon.setAttribute("id", "task"+storage.taskCount);
     newTaskCon.setAttribute("class", "newTask");
 
     newTaskCon.addEventListener("click",() =>{
-        showList(hubInfoStorage[perm]);
+        showList(storage);
     });
     
     const taskLabel = document.createElement("h1");
-    taskLabel.setAttribute("id","taskTitle"+ counter);
+    taskLabel.setAttribute("id","taskTitle"+ storage.taskCount);
     taskLabel.textContent = storage.title;
 
     const taskPriority = document.createElement("div");
-    taskPriority.setAttribute("id", "taskPriority"+perm);
+    taskPriority.setAttribute("id", "taskPriority"+storage.taskCount);
     taskPriority.classList.add("priority","priority"+storage.priority);
 
     newTaskCon.append(taskLabel, taskPriority);
@@ -143,6 +142,9 @@ const taskOne = listInfo("1", false, false, 0);
 const taskTwo = listInfo("2", true, false, 1);
 const taskThree = listInfo("3", false, false, 2);
 const test = storeInfo("test","hello1","2022-10-29","2",[taskOne,taskTwo, taskThree], false ,0);
-hubInfoStorage[0] = test;
+
+localStorage["0"] = JSON.stringify(test);
+//localStorage.clear()
+
 
 export {newCategoryForm,closeFormEvent, listInfo};

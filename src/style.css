@@ -25,6 +25,7 @@ time, mark, audio, video {
     --border-radius: 0.5rem;
     --button-radius: 0.7rem;
     --categories-width: 19rem;
+    --box-shadow-color: rgba(0,0,0,1);
 }
 body{
     display: flex;
@@ -44,7 +45,7 @@ body{
     height:50rem;
     border: var(--border);
     border-radius: var(--border-radius);
-
+    box-shadow: .1rem 0.1rem .2rem var(--box-shadow-color) ;
 }
 #hubCon{
     width: 20rem;
